@@ -68,7 +68,7 @@ public class SharePlugin extends CordovaPlugin {
         param = new ShareParamWebPage(shareInfo.getTitle(), shareInfo.getShareDesc(), shareInfo.getShareUrl());
 //        ShareParamImage paramImage = (ShareParamImage) param;
 ///        paramImage.setImage(new ShareImage(shareInfo.shareImageUrl));
-        mPlatform.toShare(param);
+        mPlatform.doShare(param);
     }
 
 

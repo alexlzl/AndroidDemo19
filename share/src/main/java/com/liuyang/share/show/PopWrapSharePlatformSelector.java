@@ -12,6 +12,7 @@ import android.widget.GridView;
 import android.widget.PopupWindow;
 
 import com.liuyang.share.R;
+import com.liuyang.share.ShareInfoParams;
 
 
 /**
@@ -21,8 +22,8 @@ public class PopWrapSharePlatformSelector extends BaseSharePlatformSelector {
     protected PopupWindow mShareWindow;
     protected View mAnchorView;
 
-    public PopWrapSharePlatformSelector(FragmentActivity context, View anchorView, OnShareSelectorDismissListener dismissListener, AdapterView.OnItemClickListener itemClickListener) {
-        super(context, dismissListener, itemClickListener);
+    public PopWrapSharePlatformSelector(ShareInfoParams shareInfoParams, FragmentActivity context, View anchorView, OnShareSelectorDismissListener dismissListener, AdapterView.OnItemClickListener itemClickListener) {
+        super(shareInfoParams,context, dismissListener, itemClickListener);
         mAnchorView = anchorView;
     }
 

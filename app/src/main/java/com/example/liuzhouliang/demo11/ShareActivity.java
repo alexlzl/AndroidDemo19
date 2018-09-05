@@ -55,7 +55,7 @@ public class ShareActivity extends FragmentActivity implements View.OnClickListe
                         .setSinaRedirectUrl(DEFAULT_REDIRECT_URL)
                         .setSinaScope(DEFAULT_SCOPE)
                         .build();
-                mPlatform = new ShareHelper(ShareActivity.this,shareBuilder,back);
+                mPlatform = new ShareHelper(null,ShareActivity.this,shareBuilder,back);
                 qqshare();
                 break;
             default:
@@ -67,7 +67,7 @@ public class ShareActivity extends FragmentActivity implements View.OnClickListe
         param = new ShareParamImage("飞利浦SPS2620X/93插线板", "飞利浦SPS2620X/93插线板", "http://item.gome.com.cn/9133860280-1122860067.html");
         ShareParamImage paramImage = (ShareParamImage) param;
         paramImage.setImage(generateImage());
-        mPlatform.toShare(param);
+        mPlatform.doShare(param);
     }
 
     private ShareImage generateImage() {

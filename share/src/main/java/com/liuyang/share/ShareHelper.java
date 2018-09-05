@@ -21,23 +21,32 @@ public class ShareHelper {
     private BaseSharePlatformSelector mPlatformSelector;
     private ShareResultCallBack mCallback;
     private BaseShareParam mShareParam;
+    private ShareInfoParams mShareInfoParams;
 
-    public ShareHelper(FragmentActivity context, ShareBuilder shareBuilder,ShareResultCallBack callback) {
+    public ShareHelper(ShareInfoParams shareInfoParams, FragmentActivity context, ShareBuilder shareBuilder, ShareResultCallBack callback) {
         if (context == null) {
             throw new NullPointerException("context must be not null");
         }
-        if(shareBuilder==null){
+        if (shareBuilder == null) {
             throw new NullPointerException("shareBuilder must be not null");
         }
         mContext = context;
         mCallback = callback;
         mPlatformDistribution = new SharePlatformDistribution(shareBuilder);
+        mShareInfoParams = shareInfoParams;
     }
 
-    public void toShare(BaseShareParam content) {
+    /**
+     * @ describe 执行分享
+     * @author lzl
+     * @ time 2018/9/5 11:48
+     * @ param
+     * @ return
+     */
+    public void doShare(BaseShareParam content) {
         this.mShareParam = content;
-        if(mPlatformSelector==null){
-            mPlatformSelector = new DialogSharePlatformSelector(mContext, new BaseSharePlatformSelector.OnShareSelectorDismissListener() {
+        if (mPlatformSelector == null) {
+            mPlatformSelector = new DialogSharePlatformSelector(mShareInfoParams, mContext, new BaseSharePlatformSelector.OnShareSelectorDismissListener() {
                 @Override
                 public void onDismiss() {
                     onShareSelectorDismiss();
@@ -47,6 +56,13 @@ public class ShareHelper {
         mPlatformSelector.show();
     }
 
+    /**
+     * @ describe 点击分享事件回调
+     * @author lzl
+     * @ time 2018/9/5 11:46
+     * @ param
+     * @ return
+     */
     private AdapterView.OnItemClickListener mShareItemClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -55,7 +71,7 @@ public class ShareHelper {
         }
     };
 
-   private void onShareSelectorDismiss() {
+    private void onShareSelectorDismiss() {
         mPlatformSelector.dismiss();
     }
 
@@ -65,9 +81,10 @@ public class ShareHelper {
         }
         mPlatformDistribution.share(mContext, item.media, mShareParam, mCallback);
     }
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(mPlatformDistribution.getmShareHandler()!=null){
-            mPlatformDistribution.getmShareHandler().onActivityResult(requestCode,resultCode,data);
+        if (mPlatformDistribution.getmShareHandler() != null) {
+            mPlatformDistribution.getmShareHandler().onActivityResult(requestCode, resultCode, data);
         }
     }
 

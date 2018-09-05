@@ -16,6 +16,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
 import com.liuyang.share.R;
+import com.liuyang.share.ShareInfoParams;
 
 
 /**
@@ -30,8 +31,8 @@ public class PopFullScreenSharePlatformSelector extends BaseSharePlatformSelecto
     private GridView grid;
     private Animation enterAnimation;
 
-    public PopFullScreenSharePlatformSelector(FragmentActivity context, View anchorView, OnShareSelectorDismissListener dismissListener, AdapterView.OnItemClickListener itemClickListener) {
-        super(context, dismissListener, itemClickListener);
+    public PopFullScreenSharePlatformSelector(ShareInfoParams shareInfoParams, FragmentActivity context, View anchorView, OnShareSelectorDismissListener dismissListener, AdapterView.OnItemClickListener itemClickListener) {
+        super(shareInfoParams,context, dismissListener, itemClickListener);
         mAnchorView = anchorView;
     }
 

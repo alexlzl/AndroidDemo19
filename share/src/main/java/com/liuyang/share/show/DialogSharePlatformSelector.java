@@ -14,6 +14,7 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 
 import com.liuyang.share.R;
+import com.liuyang.share.ShareInfoParams;
 
 /**
  * 对话框默认实现
@@ -22,9 +23,8 @@ public class DialogSharePlatformSelector extends BaseSharePlatformSelector {
 
     private Dialog mShareDialog;
 
-    public DialogSharePlatformSelector(FragmentActivity context, OnShareSelectorDismissListener dismissListener, AdapterView.OnItemClickListener itemClickListener) {
-        super(context, dismissListener, itemClickListener);
-
+    public DialogSharePlatformSelector(ShareInfoParams shareInfoParams, FragmentActivity context, OnShareSelectorDismissListener dismissListener, AdapterView.OnItemClickListener itemClickListener) {
+        super(shareInfoParams,context, dismissListener, itemClickListener);
     }
 
     @Override
@@ -34,18 +34,20 @@ public class DialogSharePlatformSelector extends BaseSharePlatformSelector {
             mShareDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialog) {
-                    if (getDismissListener() != null)
+                    if (getDismissListener() != null) {
                         getDismissListener().onDismiss();
+                    }
+
                 }
             });
         }
         mShareDialog.show();
     }
 
-    public Dialog createDialog(){
+    public Dialog createDialog() {
         GridView grid = createShareGridView(getContext(), mItemClickListener);
-        LinearLayout linearLayout = (LinearLayout)View.inflate(getContext(),R.layout.share_socialize_shareboard_main,null);
-        linearLayout.addView(grid,0);
+        LinearLayout linearLayout = (LinearLayout) View.inflate(getContext(), R.layout.share_socialize_shareboard_main, null);
+        linearLayout.addView(grid, 0);
         Dialog dialog = new Dialog(getContext(), R.style.Share_Dialog);
         dialog.setContentView(linearLayout);
         Window window = dialog.getWindow();
@@ -69,8 +71,10 @@ public class DialogSharePlatformSelector extends BaseSharePlatformSelector {
 
     @Override
     public void dismiss() {
-        if (mShareDialog != null)
+        if (mShareDialog != null) {
             mShareDialog.dismiss();
+        }
+
     }
 
     @Override

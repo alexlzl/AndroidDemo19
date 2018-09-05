@@ -23,7 +23,7 @@ public class ShareUtil {
 
     public void share(ShareInfoParams shareInfoParams, Context context, ShareResultCallBack callBack) {
         mContext = context;
-        mShareHelper = new ShareHelper((FragmentActivity) context, getShareBuilder(shareInfoParams), callBack);
+        mShareHelper = new ShareHelper(shareInfoParams,(FragmentActivity) context, getShareBuilder(shareInfoParams), callBack);
         buildShare(shareInfoParams);
     }
 
@@ -64,7 +64,7 @@ public class ShareUtil {
      * @ return
      */
     private void buildShare(ShareInfoParams shareInfoParams) {
-        mShareHelper.toShare(getShareDataParam(shareInfoParams));
+        mShareHelper.doShare(getShareDataParam(shareInfoParams));
     }
 
     /**
