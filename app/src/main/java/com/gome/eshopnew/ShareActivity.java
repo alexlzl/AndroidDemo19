@@ -1,6 +1,8 @@
 package com.gome.eshopnew;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -15,6 +17,7 @@ import com.liuyang.share.ShareResultCallBack;
 import com.liuyang.share.ShareUtil;
 import com.liuyang.share.SocializeMedia;
 import com.liuyang.share.exception.ShareException;
+import com.liuyang.share.params.ShareImage;
 
 /**
  * Created by liuyang-ds on 2016/12/28.
@@ -72,12 +75,24 @@ public class ShareActivity extends FragmentActivity implements View.OnClickListe
         shareInfoParams.setTitle("测试分享标题");
         shareInfoParams.setShareDesc("测试分享内容");
         shareInfoParams.setShareType("share_image");
-        shareInfoParams.setShareImageUrl("https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2131205662,1725422972&fm=200&gp=0.jpg");
-        shareInfoParams.setShareUrl("https://www.baidu.com/");
+        shareInfoParams.setShareImageUrl("http://gfs.gomein.net.cn/T13VWTBXCv1RCvBVdK_800.jpg");
+        shareInfoParams.setShareUrl("http://item.gome.com.cn/9133860280-1122860067.html");
         String[] platform=new String[]{ShareConstants.QZONE,ShareConstants.WEIBO,ShareConstants.WEI_CHAT,ShareConstants.QQ,ShareConstants.WE_CHAT_MOMENTS};
         shareInfoParams.setPlatform(platform);
         return shareInfoParams;
 
+    }
+
+    private ShareImage generateImage() {
+        //ShareImage image = new ShareImage(file);
+        BitmapFactory.Options options2 = new BitmapFactory.Options();
+        options2.inPreferredConfig = Bitmap.Config.RGB_565;
+        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(),R.drawable.app_icon,options2);
+        ShareImage image = new ShareImage(bitmap);
+        //ShareImage image = new ShareImage(resId);
+//        ShareImage image = new ShareImage("http://gfs.gomein.net.cn/T13VWTBXCv1RCvBVdK_800.jpg");
+//        ShareImage image = new ShareImage(R.drawable.ic_launcher);
+        return image;
     }
 
 //    public void qqshare(){

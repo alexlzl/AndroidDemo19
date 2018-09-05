@@ -36,33 +36,33 @@ public class ShareUtil {
     private ShareBuilder getShareBuilder(ShareInfoParams shareInfoParams) {
         int size = shareInfoParams.getPlatform().length;
 
-//        ShareBuilder.Builder shareBuilder = new ShareBuilder.Builder(mContext)
-//                .setDefaultShareImage(R.drawable.app_icon);
-//        for (int i = 0; i < size; i++) {
-//            if (ShareConstants.QQ.equals(shareInfoParams.getPlatform()[i]) || ShareConstants.QZONE.equals(shareInfoParams.getPlatform()[i])) {
-//                shareBuilder.setQqAppId(ShareConstants.QQ_APPID).setQqScope(ShareConstants.QQ_SCOPE);
-//            } else if (ShareConstants.WEI_CHAT.equals(shareInfoParams.getPlatform()[i]) || ShareConstants.WE_CHAT_MOMENTS.equals(shareInfoParams.getPlatform()[i])) {
-//                shareBuilder.setWxAppId(ShareConstants.WECHAT_APPID);
-//            } else if (ShareConstants.WEIBO.equals(shareInfoParams.getPlatform()[i])) {
-//                shareBuilder.setSinaAppKey(ShareConstants.SINA_APPKEY)
-//                        .setSinaRedirectUrl(ShareConstants.DEFAULT_REDIRECT_URL)
-//                        .setSinaScope(ShareConstants.DEFAULT_SCOPE);
-//            } else {
-//                shareBuilder.setWxAppId(ShareConstants.WECHAT_APPID);
-//            }
-//        }
-//
-//        return shareBuilder.build();
-        ShareBuilder shareBuilder = new ShareBuilder.Builder(mContext)
-                        .setDefaultShareImage(R.drawable.app_icon)
-                        .setQqAppId(ShareConstants.QQ_APPID)
-                        .setQqScope(ShareConstants.QQ_SCOPE)
-                        .setWxAppId(ShareConstants.WECHAT_APPID)
-                        .setSinaAppKey(ShareConstants.SINA_APPKEY)
+        ShareBuilder.Builder shareBuilder = new ShareBuilder.Builder(mContext)
+                .setDefaultShareImage(R.drawable.app_icon);
+        for (int i = 0; i < size; i++) {
+            if (ShareConstants.QQ.equals(shareInfoParams.getPlatform()[i]) || ShareConstants.QZONE.equals(shareInfoParams.getPlatform()[i])) {
+                shareBuilder.setQqAppId(ShareConstants.QQ_APPID).setQqScope(ShareConstants.QQ_SCOPE);
+            } else if (ShareConstants.WEI_CHAT.equals(shareInfoParams.getPlatform()[i]) || ShareConstants.WE_CHAT_MOMENTS.equals(shareInfoParams.getPlatform()[i])) {
+                shareBuilder.setWxAppId(ShareConstants.WECHAT_APPID);
+            } else if (ShareConstants.WEIBO.equals(shareInfoParams.getPlatform()[i])) {
+                shareBuilder.setSinaAppKey(ShareConstants.SINA_APPKEY)
                         .setSinaRedirectUrl(ShareConstants.DEFAULT_REDIRECT_URL)
-                        .setSinaScope(ShareConstants.DEFAULT_SCOPE)
-                        .build();
-        return shareBuilder;
+                        .setSinaScope(ShareConstants.DEFAULT_SCOPE);
+            } else {
+                shareBuilder.setWxAppId(ShareConstants.WECHAT_APPID);
+            }
+        }
+
+        return shareBuilder.build();
+//        ShareBuilder shareBuilder = new ShareBuilder.Builder(mContext)
+//                        .setDefaultShareImage(R.drawable.app_icon)
+//                        .setQqAppId(ShareConstants.QQ_APPID)
+//                        .setQqScope(ShareConstants.QQ_SCOPE)
+//                        .setWxAppId(ShareConstants.WECHAT_APPID)
+//                        .setSinaAppKey(ShareConstants.SINA_APPKEY)
+//                        .setSinaRedirectUrl(ShareConstants.DEFAULT_REDIRECT_URL)
+//                        .setSinaScope(ShareConstants.DEFAULT_SCOPE)
+//                        .build();
+//        return shareBuilder;
 
     }
 
@@ -81,7 +81,7 @@ public class ShareUtil {
             /**
              * 图片类型分享
              */
-            param = new ShareParamImage(shareInfo.getTitle(), shareInfo.getShareDesc(), shareInfo.getShareDesc());
+            param = new ShareParamImage(shareInfo.getTitle(), shareInfo.getShareDesc(), shareInfo.getShareUrl());
             ((ShareParamImage) param).setImage(generateUrlImage(shareInfo.getShareImageUrl()));
         } else if (ShareConstants.SHARE_TEXT.equals(shareInfo.getShareType())) {
             /**
