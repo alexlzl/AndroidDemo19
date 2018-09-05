@@ -26,11 +26,13 @@ public abstract class BaseSharePlatformSelector {
     private FragmentActivity mContext;
     private OnShareSelectorDismissListener mDismissListener;
     public AdapterView.OnItemClickListener mItemClickListener;
+    private static ShareInfoParams mShareInfoParams;
 
-    public BaseSharePlatformSelector(ShareInfoParams mShareInfoParams,FragmentActivity context, OnShareSelectorDismissListener dismissListener, AdapterView.OnItemClickListener itemClickListener) {
+    public BaseSharePlatformSelector(ShareInfoParams shareInfoParams, FragmentActivity context, OnShareSelectorDismissListener dismissListener, AdapterView.OnItemClickListener itemClickListener) {
         mContext = context;
         mDismissListener = dismissListener;
         mItemClickListener = itemClickListener;
+        mShareInfoParams = shareInfoParams;
     }
 
     public abstract void show();
@@ -45,7 +47,7 @@ public abstract class BaseSharePlatformSelector {
 
     protected static GridView createShareGridView(final Context context, AdapterView.OnItemClickListener onItemClickListener) {
         GridView grid = new GridView(context);
-        ListAdapter adapter = new ArrayAdapter<ShareTarget>(context, 0, ConfigHelper.getShareTargets()) {
+        ListAdapter adapter = new ArrayAdapter<ShareTarget>(context, 0, ConfigHelper.getShareTargets(mShareInfoParams)) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.share_socialize_shareboard_item, parent, false);
@@ -68,6 +70,8 @@ public abstract class BaseSharePlatformSelector {
         grid.setOnItemClickListener(onItemClickListener);
         return grid;
     }
+
+
 
     public FragmentActivity getContext() {
         return mContext;

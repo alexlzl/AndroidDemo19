@@ -1,12 +1,11 @@
-package com.example.liuzhouliang.demo11.share;
+package com.gome.eshopnew;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
 import com.example.liuzhouliang.demo11.R;
+import com.liuyang.share.ShareConstants;
 import com.liuyang.share.ShareHelper;
 import com.liuyang.share.ShareInfoParams;
 import com.liuyang.share.ShareResultCallBack;
@@ -37,8 +36,9 @@ public class SharePlugin extends CordovaPlugin {
     public boolean execute(String action, CordovaArgs args, CallbackContext callbackContext) throws JSONException {
 
         if (ACTION_NAME.equals(action)) {
-            ShareInfoParams shareInfo = JSON.parseObject(args.optString(0), new TypeReference<ShareInfoParams>() {
-            });
+//            ShareInfoParams shareInfo = JSON.parseObject(args.optString(0), new TypeReference<ShareInfoParams>() {
+//            });
+            ShareInfoParams shareInfo=getShareData();
 //            ShareBuilder shareBuilder = new ShareBuilder.Builder(cordova.getActivity())
 //                    .setDefaultShareImage(R.drawable.app_icon)
 //                    .setQqAppId(ShareConstants.QQ_APPID)
@@ -60,6 +60,19 @@ public class SharePlugin extends CordovaPlugin {
             return true;
         }
         return false;
+    }
+
+    private ShareInfoParams getShareData(){
+        ShareInfoParams shareInfoParams=new ShareInfoParams();
+        shareInfoParams.setTitle("测试分享标题");
+        shareInfoParams.setShareDesc("测试分享内容");
+        shareInfoParams.setShareType("share_image");
+        shareInfoParams.setShareImageUrl("https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2131205662,1725422972&fm=200&gp=0.jpg");
+        shareInfoParams.setShareUrl("https://www.baidu.com/");
+        String[] platform=new String[]{ShareConstants.WEIBO,ShareConstants.WEI_CHAT,ShareConstants.QQ,ShareConstants.WE_CHAT_MOMENTS,ShareConstants.QZONE};
+        shareInfoParams.setPlatform(platform);
+        return shareInfoParams;
+
     }
 
 

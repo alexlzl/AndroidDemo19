@@ -6,7 +6,7 @@ package com.liuyang.share;
 public class ShareConstants {
     public static final String QQ_APPID = "100825615";
     public static final String QQ_SCOPE = "all";
-    public static final String WECHAT_APPID = "wx4cc1d66050b7aba1";
+    public static final String WECHAT_APPID = "wx28f63a05c1ee1424";
     public static final String WECHAT_APPSECRET = "abf27897df4c5c9ad61cdf80c956495a";
     public static final String SINA_APPKEY = "686166542";
     public static final String DEFAULT_REDIRECT_URL = "http://www.gome.com.cn";
@@ -19,6 +19,7 @@ public class ShareConstants {
     public static final String  WEI_CHAT="Wechat";
     public static final String  WE_CHAT_MOMENTS="WechatMoments";
     public static final String  WEIBO="WeiBo";
+    public static final String  COPY_LINK="CopyLink";
     public static final String  SHARE_IMAGE="share_image";
     public static final String  SHARE_TEXT="share_text";
     public static final int ST_CODE_SUCCESSED = 200;
