@@ -1,0 +1,127 @@
+buildscript {
+    ext.kotlin_version = '1.2.30'
+    repositories {
+        maven {
+            url getProperty("MAVEN_REPO")
+            credentials {
+                username = getProperty("MAVEN_USER")
+                password = getProperty("MAVEN_PASS")
+            }
+        }
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
+        classpath 'com.gutils.router:router:' + getProperty("AAR_GROUTER_VERSION")
+        classpath 'com.gutils.report:report:' + getProperty("AAR_REPORT_VERSION")
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2"
+    }
+}
+
+allprojects {
+    repositories {
+        maven {
+            url getProperty("MAVEN_REPO")
+            credentials {
+                username = getProperty("MAVEN_USER")
+                password = getProperty("MAVEN_PASS")
+            }
+        }
+        mavenCentral()
+    }
+    ext {
+        compileSdkVersion = 25
+        buildToolsVersion = "25.0.2"
+        targetSdkVersion = 25
+        minSdkVersion = 14
+
+        proDeps = false
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext.deps = [
+        //kotlin support
+        SKotlin          : "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version",
+        //support
+        SConstraintLayout: 'com.android.support.constraint:constraint-layout:1.0.2',
+        SRecyclerview    : 'com.android.support:recyclerview-v7:25.3.1',
+        SAppcompat       : 'com.android.support:appcompat-v7:25.3.1',
+        SDesign          : 'com.android.support:design:25.3.1',
+        SDex             : 'com.android.support:multidex:1.0.1',
+        SRxjava          : 'io.reactivex.rxjava2:rxjava:2.1.9',
+        SRxAndroid       : 'io.reactivex.rxjava2:rxandroid:2.0.2',
+        SFastJson        : 'com.alibaba:fastjson:1.1.68.android',
+        SGomePay         :  'com.thirdparty:gomepay_b_sdk:2.6.8',
+        //基础模块
+        GBuildConfig     : depMcp('buildconfig'),
+//        GHttp            : 'com.gome.mcp:ghttp:0.1.4@aar', //depMcpAar('http')
+        GHttp            : depMcpAar('http'),
+        GSec             : "com.gome.mcp:sec-staff:2.7.5:staffRelease@aar",
+        GUtils           : depMcpAar('utils'),
+        GScan            : depMcpAar('scan'),
+        GThread          : depMcpAar('thread'),
+        GCrash           : depMcpAar('crash'),
+//        GSafekeyboard    : depMcpAar('safeKeyboard'),
+        GImage           : depMcpAar('image'),
+        GLog             : depMcpAar('log'),
+        GMVP             : depMcpAar('mvp'),
+        GBus             : depMcpAar('bus'),
+        GDAO             : depMcpAar('dao'),
+        GWAP             : depMcpAar('wap'),
+        GCACHE           : depMcpAar('cache'),
+        GLocation        : depMcpAar('location'),
+        GUpdate         : depMcpAar('update'),
+        //router独立版本
+        GRouter          : 'com.gome.mcp:router:' + getProperty('AAR_GROUTER_VERSION') + '@aar',
+        //通用UI模块
+        GDialog          : false ? project(':GDialog') : 'cn.gome.staff.ui:dialog:' + getProperty('AAR_UI_DIALOG_VERSION') + '@aar',
+        GPullToRefresh   : false ? project(':GPullToRefresh') : 'cn.gome.staff.ui:pulltorefresh:' + getProperty('AAR_UI_PULLTOREFRESH_VERSION') + '@aar',
+        GSelectPhoto     : false ? project(':GSelectPhoto') : 'cn.gome.staff.ui:selectphoto:' + getProperty('AAR_UI_SELECTPHOTO_VERSION') + '@aar',
+        GStatusView      : false ? project(':GStatusView') : 'cn.gome.staff.ui:statusview:' + getProperty('AAR_UI_STATUSVIEW_VERSION') + '@aar',
+        GTitleBar        : false ? project(':GTitleBar') : 'cn.gome.staff.ui:titlebar:' + getProperty('AAR_UI_TITLEBAR_VERSION') + '@aar',
+        GView            : false ? project(':GView') : 'cn.gome.staff.ui:view:' + getProperty('AAR_UI_VIEW_VERSION') + '@aar',
+        GKtx             : rootProject.ext.proDeps ? project(':GKtx') : 'com.gome.mcp:ktx:' + getProperty('AAR_GKTX_VERSION') + '@aar',
+        STheme           : rootProject.ext.proDeps ? project(':STheme') : 'cn.gome.staff:theme:' + getProperty('AAR_STHEME_VERSION') + '@aar',
+        GAnalytics       : rootProject.ext.proDeps ? project(':GAnalytics') : 'cn.gome.staff:analytics:' + getProperty('AAR_GANALYTICS_VERSION') + '@aar',
+        //业务模块
+        SBuss            : rootProject.ext.proDeps ? project(':SBuss') : 'cn.gome.staff:buss:' + getProperty('AAR_SBUSS_VERSION') + '@aar',
+        SScheme          : rootProject.ext.proDeps ? project(':SScheme') : 'cn.gome.staff:scheme:' + getProperty('AAR_SSCHEME_VERSION') + '@aar',
+        SAccount         : rootProject.ext.proDeps ? project(':SAccount') : 'cn.gome.staff:account:' + getProperty('AAR_SACCOUNT_VERSION') + '@aar',
+        SCashier         : rootProject.ext.proDeps ? project(':SCashier') : 'cn.gome.staff:cashier:' + getProperty('AAR_SCASHIER_VERSION') + '@aar',
+        SCreateOrder     : rootProject.ext.proDeps ? project(':SCreateOrder') : 'cn.gome.staff:createorder:' + getProperty('AAR_SCREATEORDER_VERSION') + '@aar',
+        SGuide           : rootProject.ext.proDeps ? project(':SGuide') : 'cn.gome.staff:guide:' + getProperty('AAR_SGUIDE_VERSION') + '@aar',
+        SLogin           : rootProject.ext.proDeps ? project(':SLogin') : 'cn.gome.staff:login:' + getProperty('AAR_SLOGIN_VERSION') + '@aar',
+        SOrder           : rootProject.ext.proDeps ? project(':SOrder') : 'cn.gome.staff:order:' + getProperty('AAR_SORDER_VERSION') + '@aar',
+        SReturn          : rootProject.ext.proDeps ? project(':SReturn') : 'cn.gome.staff:returns:' + getProperty('AAR_SRETURN_VERSION') + '@aar',
+        SScan            : rootProject.ext.proDeps ? project(':SScan') : 'cn.gome.staff:scan:' + getProperty('AAR_SSCAN_VERSION') + '@aar',
+        SShopList        : rootProject.ext.proDeps ? project(':SShopList') : 'cn.gome.staff:shoplist:' + getProperty('AAR_SSHOPLIST_VERSION') + '@aar'
+]
+
+/**
+ * depMcp dep aar, default exclude transitive dependencies
+ * @param artifactId
+ * @return
+ */
+def depMcpAar(artifactId) {
+    return "${depMcp(artifactId)}@aar"
+}
+
+/**
+ * depMcp dep
+ * @param artifactId
+ * @return
+ */
+def depMcp(artifactId) {
+    return "com.gome.mcp:$artifactId:${getProperty('AAR_MCP_VERSION')}"
+}
+
+apply plugin: "org.sonarqube"

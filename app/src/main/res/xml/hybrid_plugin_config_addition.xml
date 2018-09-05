@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget
+    id="cn.gome.staff"
+    version="0.0.1">
+    <!-- widget 节点名称与本xml文件的名字 请勿修改 Wap 需要按照字段解析 -->
+    <feature name="Share">
+        <param
+            name="android-package"
+            value="com.example.liuzhouliang.demo11.share.SharePlugin"/>
+    </feature>
+
+</widget>

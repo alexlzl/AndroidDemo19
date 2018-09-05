@@ -1,0 +1,22 @@
+<resources>
+
+    <style name="share_socialize_shareboard_animation">
+        <item name="android:windowEnterAnimation">@anim/share_popu_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/share_popu_bottom_out</item>
+    </style>
+
+    <style name="Share_Dialog" parent="@android:style/Theme.Dialog">
+        <!-- 去除标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 去除背景 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.4</item>
+    </style>
+
+    <style name="ShareDialogAnimationSlidBottom">
+        <item name="android:windowEnterAnimation">@anim/share_dialog_slid_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/share_dialog_slid_bottom_out</item>
+    </style>
+
+</resources>

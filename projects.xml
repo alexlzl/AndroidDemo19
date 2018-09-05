@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<manifest branch="master" bundleOpen="false" host="git@code.ds.gome.com.cn:">
+    <project url="git@code.ds.gome.com.cn:mobile-android-business/STheme.git" />
+
+    <project url="git@code.ds.gome.com.cn:mobile-android-repo/GDialog.git" />
+    <project url="git@code.ds.gome.com.cn:mobile-android-repo/GPullToRefresh.git" />
+    <project url="git@code.ds.gome.com.cn:mobile-android-repo/GSelectPhoto.git" />
+    <project url="git@code.ds.gome.com.cn:mobile-android-repo/GStatusView.git" />
+    <project url="git@code.ds.gome.com.cn:mobile-android-repo/GTitleBar.git" />
+    <project url="git@code.ds.gome.com.cn:mobile-android-repo/GView.git" />
+
+    <project url="git@code.ds.gome.com.cn:mobile-android-repo/GKtx.git" />
+    <project branch="staff_06_15" url="git@code.ds.gome.com.cn:mobile-android-common/GAnalytics.git" />
+    <project url="git@code.ds.gome.com.cn:mobile-android-business/SScheme.git" />
+    <project url="git@code.ds.gome.com.cn:mobile-android-business/SBuss.git" />
+
+
+    <project url="git@code.ds.gome.com.cn:mobile-android-business/SAccount.git" />
+    <project url="git@code.ds.gome.com.cn:mobile-android-business/SCashier.git" />
+    <project url="git@code.ds.gome.com.cn:mobile-android-business/SCreateOrder.git" />
+    <project url="git@code.ds.gome.com.cn:mobile-android-business/SGuide.git" />
+    <project url="git@code.ds.gome.com.cn:mobile-android-business/SLogin.git" />
+    <project url="git@code.ds.gome.com.cn:mobile-android-business/SReturn.git" />
+    <project url="git@code.ds.gome.com.cn:mobile-android-business/SScan.git" />
+    <project url="git@code.ds.gome.com.cn:mobile-android-business/SShopList.git" />
+    <project url="git@code.ds.gome.com.cn:mobile-android-business/SOrder.git" />
+
+    <!--主工程-->
+    <project app="true" groups="app" url="git@code.ds.gome.com.cn:mobile-android/GomeStaff.git" />
+</manifest>
