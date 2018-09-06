@@ -22,6 +22,7 @@ public class ShareConstants {
     public static final String  COPY_LINK="CopyLink";
     public static final String  SHARE_IMAGE="share_image";
     public static final String  SHARE_TEXT="share_text";
+    public static final String  SHARE_VIDEO="share_video";
     public static final int ST_CODE_SUCCESSED = 200;
     public static final int ST_CODE_ERROR_CANCEL = 201;
     public static final int ST_CODE_ERROR = 202;

@@ -21,9 +21,9 @@ public class ShareHelper {
     private BaseSharePlatformSelector mPlatformSelector;
     private ShareResultCallBack mCallback;
     private BaseShareParam mShareParam;
-    private ShareInfoParams mShareInfoParams;
+    private ShareData mShareInfoParams;
 
-    public ShareHelper(ShareInfoParams shareInfoParams, FragmentActivity context, ShareBuilder shareBuilder, ShareResultCallBack callback) {
+    public ShareHelper(ShareData shareInfoParams, FragmentActivity context, ShareBuilder shareBuilder, ShareResultCallBack callback) {
         if (context == null) {
             throw new NullPointerException("context must be not null");
         }

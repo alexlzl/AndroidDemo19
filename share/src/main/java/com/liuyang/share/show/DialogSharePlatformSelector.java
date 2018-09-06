@@ -14,7 +14,7 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 
 import com.liuyang.share.R;
-import com.liuyang.share.ShareInfoParams;
+import com.liuyang.share.ShareData;
 
 /**
  * 对话框默认实现
@@ -23,7 +23,7 @@ public class DialogSharePlatformSelector extends BaseSharePlatformSelector {
 
     private Dialog mShareDialog;
 
-    public DialogSharePlatformSelector(ShareInfoParams shareInfoParams, FragmentActivity context, OnShareSelectorDismissListener dismissListener, AdapterView.OnItemClickListener itemClickListener) {
+    public DialogSharePlatformSelector(ShareData shareInfoParams, FragmentActivity context, OnShareSelectorDismissListener dismissListener, AdapterView.OnItemClickListener itemClickListener) {
         super(shareInfoParams,context, dismissListener, itemClickListener);
     }
 

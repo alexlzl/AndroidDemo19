@@ -10,7 +10,22 @@
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
-        android:text="点击开始分享"/>
+        android:text="分享图片类型"/>
 
-
+    <Button
+        android:onClick="shareText"
+        android:id="@+id/btnShareText"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:text="分享文本类型"/>
+    <Button
+        android:onClick="shareVideo"
+        android:id="@+id/btnShareVideo"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:text="分享视频类型"/>
 </LinearLayout>

@@ -7,7 +7,7 @@ import java.util.Arrays;
  * @ describe  传入的分享数据对应实体
  * @ time 2018/9/4 12:01
  */
-public class ShareInfoParams {
+public class ShareData {
     /**
      * 分享的平台支持的类型
      */
@@ -34,7 +34,7 @@ public class ShareInfoParams {
     private String shareType;
 
 
-    public ShareInfoParams() {
+    public ShareData() {
     }
 
     public String[] getPlatform() {
@@ -87,7 +87,7 @@ public class ShareInfoParams {
 
     @Override
     public String toString() {
-        return "ShareInfoParams{" +
+        return "ShareData{" +
                 "platform=" + Arrays.toString(platform) +
                 ", title='" + title + '\'' +
                 ", shareDesc='" + shareDesc + '\'' +

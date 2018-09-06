@@ -13,7 +13,7 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.liuyang.share.R;
-import com.liuyang.share.ShareInfoParams;
+import com.liuyang.share.ShareData;
 import com.liuyang.share.helper.ConfigHelper;
 import com.liuyang.share.model.ShareTarget;
 
@@ -26,9 +26,9 @@ public abstract class BaseSharePlatformSelector {
     private FragmentActivity mContext;
     private OnShareSelectorDismissListener mDismissListener;
     public AdapterView.OnItemClickListener mItemClickListener;
-    private static ShareInfoParams mShareInfoParams;
+    private static ShareData mShareInfoParams;
 
-    public BaseSharePlatformSelector(ShareInfoParams shareInfoParams, FragmentActivity context, OnShareSelectorDismissListener dismissListener, AdapterView.OnItemClickListener itemClickListener) {
+    public BaseSharePlatformSelector(ShareData shareInfoParams, FragmentActivity context, OnShareSelectorDismissListener dismissListener, AdapterView.OnItemClickListener itemClickListener) {
         mContext = context;
         mDismissListener = dismissListener;
         mItemClickListener = itemClickListener;

@@ -6,8 +6,8 @@ import android.widget.Toast;
 
 import com.example.liuzhouliang.demo11.R;
 import com.liuyang.share.ShareConstants;
+import com.liuyang.share.ShareData;
 import com.liuyang.share.ShareHelper;
-import com.liuyang.share.ShareInfoParams;
 import com.liuyang.share.ShareResultCallBack;
 import com.liuyang.share.ShareUtil;
 import com.liuyang.share.SocializeMedia;
@@ -36,9 +36,9 @@ public class SharePlugin extends CordovaPlugin {
     public boolean execute(String action, CordovaArgs args, CallbackContext callbackContext) throws JSONException {
 
         if (ACTION_NAME.equals(action)) {
-//            ShareInfoParams shareInfo = JSON.parseObject(args.optString(0), new TypeReference<ShareInfoParams>() {
+//            ShareData shareInfo = JSON.parseObject(args.optString(0), new TypeReference<ShareData>() {
 //            });
-            ShareInfoParams shareInfo=getShareData();
+            ShareData shareInfo=getShareData();
 //            ShareBuilder shareBuilder = new ShareBuilder.Builder(cordova.getActivity())
 //                    .setDefaultShareImage(R.drawable.app_icon)
 //                    .setQqAppId(ShareConstants.QQ_APPID)
@@ -62,8 +62,8 @@ public class SharePlugin extends CordovaPlugin {
         return false;
     }
 
-    private ShareInfoParams getShareData(){
-        ShareInfoParams shareInfoParams=new ShareInfoParams();
+    private ShareData getShareData(){
+        ShareData shareInfoParams=new ShareData();
         shareInfoParams.setTitle("测试分享标题");
         shareInfoParams.setShareDesc("测试分享内容");
         shareInfoParams.setShareType("share_image");
@@ -76,7 +76,7 @@ public class SharePlugin extends CordovaPlugin {
     }
 
 
-    public void qqshare(ShareInfoParams shareInfo) {
+    public void qqshare(ShareData shareInfo) {
         BaseShareParam param = null;
         param = new ShareParamWebPage(shareInfo.getTitle(), shareInfo.getShareDesc(), shareInfo.getShareUrl());
 //        ShareParamImage paramImage = (ShareParamImage) param;

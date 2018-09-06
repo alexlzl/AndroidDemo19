@@ -4,17 +4,20 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.FragmentActivity;
+import android.widget.Toast;
 
 import com.liuyang.share.params.BaseShareParam;
 import com.liuyang.share.params.ShareImage;
 import com.liuyang.share.params.ShareParamImage;
 import com.liuyang.share.params.ShareParamText;
+import com.liuyang.share.params.ShareParamVideo;
+import com.liuyang.share.params.ShareVideo;
 
 import java.io.File;
 
 /**
  * @author lzl
- * @ describe
+ * @ describe   分享入口
  * @ time 2018/9/4 18:09
  */
 public class ShareUtil {
@@ -38,10 +41,15 @@ public class ShareUtil {
         return mShareUtil;
     }
 
-    public void share(ShareInfoParams shareInfoParams, Context context, ShareResultCallBack shareResultCallBack) {
-        mContext = context.getApplicationContext();
-        ShareHelper mShareHelper = new ShareHelper(shareInfoParams, (FragmentActivity) context, getShareBuilder(shareInfoParams), shareResultCallBack);
-        mShareHelper.doShare(getShareDataParam(shareInfoParams));
+    public void share(ShareData shareInfoParams, Context context, ShareResultCallBack shareResultCallBack) {
+        if (shareInfoParams != null && shareInfoParams.getPlatform().length > 0) {
+            mContext = context.getApplicationContext();
+            ShareHelper mShareHelper = new ShareHelper(shareInfoParams, (FragmentActivity) context, getShareBuilder(shareInfoParams), shareResultCallBack);
+            mShareHelper.doShare(getShareDataType(shareInfoParams));
+        } else {
+            Toast.makeText(context, "分享异常", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     /**
@@ -51,7 +59,7 @@ public class ShareUtil {
      * @ param
      * @ return
      */
-    private ShareBuilder getShareBuilder(ShareInfoParams shareInfoParams) {
+    private ShareBuilder getShareBuilder(ShareData shareInfoParams) {
         int size = shareInfoParams.getPlatform().length;
 
         ShareBuilder.Builder shareBuilder = new ShareBuilder.Builder(mContext)
@@ -83,7 +91,7 @@ public class ShareUtil {
      * @ param
      * @ return
      */
-    private BaseShareParam getShareDataParam(ShareInfoParams shareInfo) {
+    private BaseShareParam getShareDataType(ShareData shareInfo) {
         BaseShareParam param = null;
 
         if (ShareConstants.SHARE_IMAGE.equals(shareInfo.getShareType())) {
@@ -97,9 +105,27 @@ public class ShareUtil {
              * 文本类型分享
              */
             param = new ShareParamText(shareInfo.getTitle(), shareInfo.getShareDesc(), shareInfo.getShareUrl());
+        }else if (ShareConstants.SHARE_VIDEO.equals(shareInfo.getShareType())) {
+            /**
+             * 视频类型分享
+             */
+            param = new ShareParamVideo(shareInfo.getTitle(), shareInfo.getShareDesc(), shareInfo.getShareUrl());
+            ((ShareParamVideo)param).setVideo(getShareVideo(shareInfo));
+        }else{
+            param = new ShareParamImage(shareInfo.getTitle(), shareInfo.getShareDesc(), shareInfo.getShareUrl());
+            ((ShareParamImage) param).setImage(generateUrlImage(shareInfo.getShareImageUrl()));
         }
         return param;
 
+    }
+
+    private ShareVideo getShareVideo(ShareData shareData){
+        ShareVideo shareVideo=new ShareVideo();
+        ShareImage shareImage=new ShareImage(shareData.getShareImageUrl());
+        shareVideo.setThumb(shareImage);
+        shareVideo.setDescription(shareData.getShareDesc());
+        shareVideo.setVideoSrcUrl(shareData.getShareUrl());
+        return shareVideo;
     }
 
     /**
