@@ -22,7 +22,7 @@ public class ShareUtil {
 
     public void share(ShareInfoParams shareInfoParams, Context context, ShareResultCallBack callBack) {
         mContext = context;
-        ShareHelper mShareHelper = new ShareHelper(shareInfoParams,(FragmentActivity) context, getShareBuilder(shareInfoParams), callBack);
+        ShareHelper mShareHelper = new ShareHelper(shareInfoParams, (FragmentActivity) context, getShareBuilder(shareInfoParams), callBack);
         mShareHelper.doShare(getShareDataParam(shareInfoParams));
     }
 
@@ -53,16 +53,7 @@ public class ShareUtil {
         }
 
         return shareBuilder.build();
-//        ShareBuilder shareBuilder = new ShareBuilder.Builder(mContext)
-//                        .setDefaultShareImage(R.drawable.app_icon)
-//                        .setQqAppId(ShareConstants.QQ_APPID)
-//                        .setQqScope(ShareConstants.QQ_SCOPE)
-//                        .setWxAppId(ShareConstants.WECHAT_APPID)
-//                        .setSinaAppKey(ShareConstants.SINA_APPKEY)
-//                        .setSinaRedirectUrl(ShareConstants.DEFAULT_REDIRECT_URL)
-//                        .setSinaScope(ShareConstants.DEFAULT_SCOPE)
-//                        .build();
-//        return shareBuilder;
+
 
     }
 
