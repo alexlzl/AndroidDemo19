@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.liuzhouliang.demo11.R;
+import com.liuyang.share.ShareBuilder;
 import com.liuyang.share.ShareConstants;
 import com.liuyang.share.ShareData;
 import com.liuyang.share.ShareHelper;
@@ -21,7 +22,7 @@ import com.liuyang.share.exception.ShareException;
  */
 public class ShareActivity extends FragmentActivity implements View.OnClickListener {
     private Button btnShare;
-    private ShareHelper mPlatform;
+    private ShareHelper mShareHelper ;
     private String video = "https://v1-tt.ixigua.com/2ce0de4ab005d865410ee0f140e0e8e9/5b90a9d3/video/m/220e5969680e3ef4e1aaa376786975d9384115b1fd50000380c95d4543f/";
 
     @Override
@@ -39,8 +40,9 @@ public class ShareActivity extends FragmentActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.btnShare:
                 ShareData shareInfo = getShareImageData();
+                mShareHelper = new ShareHelper(shareInfo, this,getShareBuilder(shareInfo), back);
                 if (shareInfo != null && shareInfo.getPlatform().length > 0) {
-                    ShareUtil.getShareUtil().share(shareInfo, this, back);
+                    ShareUtil.getShareUtil().share(mShareHelper,shareInfo,this);
                 } else {
                     Toast.makeText(this, "分享异常", Toast.LENGTH_SHORT).show();
                 }
@@ -49,11 +51,34 @@ public class ShareActivity extends FragmentActivity implements View.OnClickListe
                 break;
         }
     }
+    private ShareBuilder getShareBuilder(ShareData shareInfoParams) {
+        int size = shareInfoParams.getPlatform().length;
 
+        ShareBuilder.Builder shareBuilder = new ShareBuilder.Builder(this)
+                .setDefaultShareImage(com.liuyang.share.R.drawable.app_icon);
+        for (int i = 0; i < size; i++) {
+            if (ShareConstants.QQ.equals(shareInfoParams.getPlatform()[i]) || ShareConstants.QZONE.equals(shareInfoParams.getPlatform()[i])) {
+                shareBuilder.setQqAppId(ShareConstants.QQ_APPID).setQqScope(ShareConstants.QQ_SCOPE);
+            } else if (ShareConstants.WEI_CHAT.equals(shareInfoParams.getPlatform()[i]) || ShareConstants.WE_CHAT_MOMENTS.equals(shareInfoParams.getPlatform()[i])) {
+                shareBuilder.setWxAppId(ShareConstants.WECHAT_APPID);
+            } else if (ShareConstants.WEIBO.equals(shareInfoParams.getPlatform()[i])) {
+                shareBuilder.setSinaAppKey(ShareConstants.SINA_APPKEY)
+                        .setSinaRedirectUrl(ShareConstants.DEFAULT_REDIRECT_URL)
+                        .setSinaScope(ShareConstants.DEFAULT_SCOPE);
+            } else {
+                shareBuilder.setWxAppId(ShareConstants.WECHAT_APPID);
+            }
+        }
+
+        return shareBuilder.build();
+
+
+    }
     public void shareText(View view) {
         ShareData shareInfo = getShareTextData();
         if (shareInfo != null && shareInfo.getPlatform().length > 0) {
-            ShareUtil.getShareUtil().share(shareInfo, this, back);
+            mShareHelper = new ShareHelper(shareInfo, this,getShareBuilder(shareInfo), back);
+            ShareUtil.getShareUtil().share(mShareHelper,shareInfo,this);
         } else {
             Toast.makeText(this, "分享异常", Toast.LENGTH_SHORT).show();
         }
@@ -62,7 +87,8 @@ public class ShareActivity extends FragmentActivity implements View.OnClickListe
     public void shareVideo(View view) {
         ShareData shareInfo = getShareVideoData();
         if (shareInfo != null && shareInfo.getPlatform().length > 0) {
-            ShareUtil.getShareUtil().share(shareInfo, this, back);
+            mShareHelper = new ShareHelper(shareInfo, this,getShareBuilder(shareInfo), back);
+            ShareUtil.getShareUtil().share(mShareHelper,shareInfo,this);
         } else {
             Toast.makeText(this, "分享异常", Toast.LENGTH_SHORT).show();
         }
@@ -139,8 +165,8 @@ public class ShareActivity extends FragmentActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (mPlatform != null) {
-            mPlatform.onActivityResult(requestCode, resultCode, data);
+        if (mShareHelper != null) {
+            mShareHelper.onActivityResult(requestCode, resultCode, data);
         }
     }
 }

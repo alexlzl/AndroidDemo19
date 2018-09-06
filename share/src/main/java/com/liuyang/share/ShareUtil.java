@@ -3,7 +3,6 @@ package com.liuyang.share;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 
 import com.liuyang.share.params.BaseShareParam;
@@ -41,45 +40,13 @@ public class ShareUtil {
         return mShareUtil;
     }
 
-    public void share(ShareData shareInfoParams, Context context, ShareResultCallBack shareResultCallBack) {
+    public void share(ShareHelper shareHelper, ShareData shareInfoParams, Context context) {
         if (shareInfoParams != null && shareInfoParams.getPlatform().length > 0) {
             mContext = context.getApplicationContext();
-            ShareHelper mShareHelper = new ShareHelper(shareInfoParams, (FragmentActivity) context, getShareBuilder(shareInfoParams), shareResultCallBack);
-            mShareHelper.doShare(getShareDataType(shareInfoParams));
+            shareHelper.doShare(getShareDataType(shareInfoParams));
         } else {
             Toast.makeText(context, "分享异常", Toast.LENGTH_SHORT).show();
         }
-
-    }
-
-    /**
-     * @ describe  初始化分享渠道
-     * @author lzl
-     * @ time 2018/9/5 10:26
-     * @ param
-     * @ return
-     */
-    private ShareBuilder getShareBuilder(ShareData shareInfoParams) {
-        int size = shareInfoParams.getPlatform().length;
-
-        ShareBuilder.Builder shareBuilder = new ShareBuilder.Builder(mContext)
-                .setDefaultShareImage(R.drawable.app_icon);
-        for (int i = 0; i < size; i++) {
-            if (ShareConstants.QQ.equals(shareInfoParams.getPlatform()[i]) || ShareConstants.QZONE.equals(shareInfoParams.getPlatform()[i])) {
-                shareBuilder.setQqAppId(ShareConstants.QQ_APPID).setQqScope(ShareConstants.QQ_SCOPE);
-            } else if (ShareConstants.WEI_CHAT.equals(shareInfoParams.getPlatform()[i]) || ShareConstants.WE_CHAT_MOMENTS.equals(shareInfoParams.getPlatform()[i])) {
-                shareBuilder.setWxAppId(ShareConstants.WECHAT_APPID);
-            } else if (ShareConstants.WEIBO.equals(shareInfoParams.getPlatform()[i])) {
-                shareBuilder.setSinaAppKey(ShareConstants.SINA_APPKEY)
-                        .setSinaRedirectUrl(ShareConstants.DEFAULT_REDIRECT_URL)
-                        .setSinaScope(ShareConstants.DEFAULT_SCOPE);
-            } else {
-                shareBuilder.setWxAppId(ShareConstants.WECHAT_APPID);
-            }
-        }
-
-        return shareBuilder.build();
-
 
     }
 
@@ -105,13 +72,13 @@ public class ShareUtil {
              * 文本类型分享
              */
             param = new ShareParamText(shareInfo.getTitle(), shareInfo.getShareDesc(), shareInfo.getShareUrl());
-        }else if (ShareConstants.SHARE_VIDEO.equals(shareInfo.getShareType())) {
+        } else if (ShareConstants.SHARE_VIDEO.equals(shareInfo.getShareType())) {
             /**
              * 视频类型分享
              */
             param = new ShareParamVideo(shareInfo.getTitle(), shareInfo.getShareDesc(), shareInfo.getShareUrl());
-            ((ShareParamVideo)param).setVideo(getShareVideo(shareInfo));
-        }else{
+            ((ShareParamVideo) param).setVideo(getShareVideo(shareInfo));
+        } else {
             param = new ShareParamImage(shareInfo.getTitle(), shareInfo.getShareDesc(), shareInfo.getShareUrl());
             ((ShareParamImage) param).setImage(generateUrlImage(shareInfo.getShareImageUrl()));
         }
@@ -119,9 +86,9 @@ public class ShareUtil {
 
     }
 
-    private ShareVideo getShareVideo(ShareData shareData){
-        ShareVideo shareVideo=new ShareVideo();
-        ShareImage shareImage=new ShareImage(shareData.getShareImageUrl());
+    private ShareVideo getShareVideo(ShareData shareData) {
+        ShareVideo shareVideo = new ShareVideo();
+        ShareImage shareImage = new ShareImage(shareData.getShareImageUrl());
         shareVideo.setThumb(shareImage);
         shareVideo.setDescription(shareData.getShareDesc());
         shareVideo.setVideoSrcUrl(shareData.getShareUrl());

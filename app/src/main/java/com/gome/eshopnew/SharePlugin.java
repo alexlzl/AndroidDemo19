@@ -9,7 +9,6 @@ import com.liuyang.share.ShareConstants;
 import com.liuyang.share.ShareData;
 import com.liuyang.share.ShareHelper;
 import com.liuyang.share.ShareResultCallBack;
-import com.liuyang.share.ShareUtil;
 import com.liuyang.share.SocializeMedia;
 import com.liuyang.share.exception.ShareException;
 import com.liuyang.share.params.BaseShareParam;
@@ -52,7 +51,7 @@ public class SharePlugin extends CordovaPlugin {
 //            qqshare(shareInfo);
             if (shareInfo != null && shareInfo.getPlatform().length > 0) {
 //                ShareUtil shareUtil = new ShareUtil();
-                ShareUtil.getShareUtil().share(shareInfo, cordova.getActivity(), back);
+//                ShareUtil.getShareUtil().share(shareInfo, cordova.getActivity(), back);
             }else{
                 Toast.makeText(cordova.getActivity(),"分享异常",Toast.LENGTH_SHORT).show();
             }
