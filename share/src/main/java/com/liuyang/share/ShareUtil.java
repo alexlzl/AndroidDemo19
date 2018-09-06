@@ -18,11 +18,29 @@ import java.io.File;
  * @ time 2018/9/4 18:09
  */
 public class ShareUtil {
+    private static volatile ShareUtil mShareUtil;
     private Context mContext;
+    private final static Object object = new Object();
 
-    public void share(ShareInfoParams shareInfoParams, Context context, ShareResultCallBack callBack) {
-        mContext = context;
-        ShareHelper mShareHelper = new ShareHelper(shareInfoParams, (FragmentActivity) context, getShareBuilder(shareInfoParams), callBack);
+    private ShareUtil() {
+
+    }
+
+    public static ShareUtil getShareUtil() {
+        if (mShareUtil == null) {
+            synchronized (object) {
+                if (mShareUtil == null) {
+                    mShareUtil = new ShareUtil();
+                }
+
+            }
+        }
+        return mShareUtil;
+    }
+
+    public void share(ShareInfoParams shareInfoParams, Context context, ShareResultCallBack shareResultCallBack) {
+        mContext = context.getApplicationContext();
+        ShareHelper mShareHelper = new ShareHelper(shareInfoParams, (FragmentActivity) context, getShareBuilder(shareInfoParams), shareResultCallBack);
         mShareHelper.doShare(getShareDataParam(shareInfoParams));
     }
 

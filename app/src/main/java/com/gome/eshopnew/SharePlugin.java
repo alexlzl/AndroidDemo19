@@ -51,8 +51,8 @@ public class SharePlugin extends CordovaPlugin {
 //            mPlatform = new ShareHelper((FragmentActivity) cordova.getActivity(), shareBuilder, back);
 //            qqshare(shareInfo);
             if (shareInfo != null && shareInfo.getPlatform().length > 0) {
-                ShareUtil shareUtil = new ShareUtil();
-                shareUtil.share(shareInfo, cordova.getActivity(), back);
+//                ShareUtil shareUtil = new ShareUtil();
+                ShareUtil.getShareUtil().share(shareInfo, cordova.getActivity(), back);
             }else{
                 Toast.makeText(cordova.getActivity(),"分享异常",Toast.LENGTH_SHORT).show();
             }

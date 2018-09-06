@@ -39,8 +39,8 @@ public class ShareActivity extends FragmentActivity implements View.OnClickListe
             case R.id.btnShare:
                 ShareInfoParams shareInfo = getShareData();
                 if (shareInfo != null && shareInfo.getPlatform().length > 0) {
-                    ShareUtil shareUtil = new ShareUtil();
-                    shareUtil.share(shareInfo, this, back);
+//                    ShareUtil shareUtil = new ShareUtil();
+                    ShareUtil.getShareUtil().share(shareInfo, this, back);
                 } else {
                     Toast.makeText(this, "分享异常", Toast.LENGTH_SHORT).show();
                 }
