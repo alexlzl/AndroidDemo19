@@ -1,10 +1,10 @@
 package com.gome.eshopnew;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.Toast;
 
-import com.example.liuzhouliang.demo11.R;
 import com.liuyang.share.ShareConstants;
 import com.liuyang.share.ShareData;
 import com.liuyang.share.ShareHelper;
@@ -118,4 +118,9 @@ public class SharePlugin extends CordovaPlugin {
             Toast.makeText(cordova.getActivity(), socializeMedia.name() + "处理中了", Toast.LENGTH_SHORT).show();
         }
     };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+    }
 }

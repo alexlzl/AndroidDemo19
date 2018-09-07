@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.example.liuzhouliang.demo11.R;
 
 public class MainActivity extends AppCompatActivity {
 

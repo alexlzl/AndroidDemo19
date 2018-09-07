@@ -3,11 +3,11 @@ package com.gome.eshopnew;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.liuzhouliang.demo11.R;
 import com.liuyang.share.ShareBuilder;
 import com.liuyang.share.ShareConstants;
 import com.liuyang.share.ShareData;
@@ -130,7 +130,7 @@ public class ShareActivity extends FragmentActivity implements View.OnClickListe
         shareInfoParams.setTitle("这个名字不错");
         shareInfoParams.setShareDesc("这个内容很有意思");
         shareInfoParams.setShareType(ShareConstants.SHARE_IMAGE);
-        shareInfoParams.setShareImageUrl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536208706724&di=db42f6e28c6738485b4ab11352a7244f&imgtype=0&src=http%3A%2F%2Fimg4.duitang.com%2Fuploads%2Fitem%2F201305%2F26%2F20130526140022_5fMJe.jpeg");
+        shareInfoParams.setShareImageUrl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536237347811&di=d0d45fe3548e21f0818911547c1c5237&imgtype=0&src=http%3A%2F%2Fwww.xz7.com%2Fup%2F2017-12%2F2017122310640.jpg");
         shareInfoParams.setShareUrl("http://item.gome.com.cn/9133860280-1122860067.html");
         String[] platform = new String[]{ShareConstants.QZONE, ShareConstants.WEIBO, ShareConstants.WEI_CHAT, ShareConstants.QQ, ShareConstants.WE_CHAT_MOMENTS};
         shareInfoParams.setPlatform(platform);
@@ -143,21 +143,25 @@ public class ShareActivity extends FragmentActivity implements View.OnClickListe
 
         @Override
         public void onSuccess(SocializeMedia socializeMedia) {
+            Log.e("TAGG","微信正常回调============"+"onSuccess");
             Toast.makeText(ShareActivity.this, socializeMedia.name() + "成功了", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onError(SocializeMedia socializeMedia, ShareException exception) {
+            Log.e("TAGG","微信正常回调============"+"onError");
             Toast.makeText(ShareActivity.this, socializeMedia.name() + "失败了", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onCancel(SocializeMedia socializeMedia) {
+            Log.e("TAGG","微信正常回调============"+"onCancel");
             Toast.makeText(ShareActivity.this, socializeMedia.name() + "取消了", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onDealing(SocializeMedia socializeMedia) {
+            Log.e("TAGG","微信正常回调============"+"onDealing");
             Toast.makeText(ShareActivity.this, socializeMedia.name() + "处理中了", Toast.LENGTH_SHORT).show();
         }
     };
