@@ -1,19 +1,19 @@
 package com.gome.eshopnew;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.support.v4.app.FragmentActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
+import com.liuyang.share.ShareBuilder;
 import com.liuyang.share.ShareConstants;
 import com.liuyang.share.ShareData;
 import com.liuyang.share.ShareHelper;
 import com.liuyang.share.ShareResultCallBack;
+import com.liuyang.share.ShareUtil;
 import com.liuyang.share.SocializeMedia;
 import com.liuyang.share.exception.ShareException;
-import com.liuyang.share.params.BaseShareParam;
-import com.liuyang.share.params.ShareImage;
-import com.liuyang.share.params.ShareParamWebPage;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaArgs;
@@ -28,32 +28,21 @@ import org.json.JSONException;
  */
 public class SharePlugin extends CordovaPlugin {
 
-    private ShareHelper mPlatform;
+    private Button btnShare;
+    private ShareHelper mShareHelper ;
+    private String video = "https://v1-tt.ixigua.com/2ce0de4ab005d865410ee0f140e0e8e9/5b90a9d3/video/m/220e5969680e3ef4e1aaa376786975d9384115b1fd50000380c95d4543f/";
     private static final String ACTION_NAME = "showNativeShareComponent";
 
     @Override
     public boolean execute(String action, CordovaArgs args, CallbackContext callbackContext) throws JSONException {
 
         if (ACTION_NAME.equals(action)) {
-//            ShareData shareInfo = JSON.parseObject(args.optString(0), new TypeReference<ShareData>() {
-//            });
-            ShareData shareInfo=getShareData();
-//            ShareBuilder shareBuilder = new ShareBuilder.Builder(cordova.getActivity())
-//                    .setDefaultShareImage(R.drawable.app_icon)
-//                    .setQqAppId(ShareConstants.QQ_APPID)
-//                    .setQqScope(ShareConstants.QQ_SCOPE)
-//                    .setWxAppId(ShareConstants.WECHAT_APPID)
-//                    .setSinaAppKey(ShareConstants.SINA_APPKEY)
-//                    .setSinaRedirectUrl(ShareConstants.DEFAULT_REDIRECT_URL)
-//                    .setSinaScope(ShareConstants.DEFAULT_SCOPE)
-//                    .build();
-//            mPlatform = new ShareHelper((FragmentActivity) cordova.getActivity(), shareBuilder, back);
-//            qqshare(shareInfo);
+            ShareData shareInfo = getShareImageData();
+            mShareHelper = new ShareHelper(shareInfo, (FragmentActivity)cordova.getActivity(),getShareBuilder(shareInfo), back);
             if (shareInfo != null && shareInfo.getPlatform().length > 0) {
-//                ShareUtil shareUtil = new ShareUtil();
-//                ShareUtil.getShareUtil().share(shareInfo, cordova.getActivity(), back);
-            }else{
-                Toast.makeText(cordova.getActivity(),"分享异常",Toast.LENGTH_SHORT).show();
+                ShareUtil.getShareUtil().share(mShareHelper,shareInfo,cordova.getActivity());
+            } else {
+                Toast.makeText(cordova.getActivity(), "分享异常", Toast.LENGTH_SHORT).show();
             }
 
             return true;
@@ -61,39 +50,105 @@ public class SharePlugin extends CordovaPlugin {
         return false;
     }
 
-    private ShareData getShareData(){
-        ShareData shareInfoParams=new ShareData();
-        shareInfoParams.setTitle("测试分享标题");
-        shareInfoParams.setShareDesc("测试分享内容");
-        shareInfoParams.setShareType("share_image");
-        shareInfoParams.setShareImageUrl("https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2131205662,1725422972&fm=200&gp=0.jpg");
-        shareInfoParams.setShareUrl("https://www.baidu.com/");
-        String[] platform=new String[]{ShareConstants.WEIBO,ShareConstants.WEI_CHAT,ShareConstants.QQ,ShareConstants.WE_CHAT_MOMENTS,ShareConstants.QZONE};
+    private ShareBuilder getShareBuilder(ShareData shareInfoParams) {
+        int size = shareInfoParams.getPlatform().length;
+
+        ShareBuilder.Builder shareBuilder = new ShareBuilder.Builder(cordova.getActivity())
+                .setDefaultShareImage(com.liuyang.share.R.drawable.app_icon);
+        for (int i = 0; i < size; i++) {
+            if (ShareConstants.QQ.equals(shareInfoParams.getPlatform()[i]) || ShareConstants.QZONE.equals(shareInfoParams.getPlatform()[i])) {
+                shareBuilder.setQqAppId(ShareConstants.QQ_APPID).setQqScope(ShareConstants.QQ_SCOPE);
+            } else if (ShareConstants.WEI_CHAT.equals(shareInfoParams.getPlatform()[i]) || ShareConstants.WE_CHAT_MOMENTS.equals(shareInfoParams.getPlatform()[i])) {
+                shareBuilder.setWxAppId(ShareConstants.WECHAT_APPID);
+            } else if (ShareConstants.WEIBO.equals(shareInfoParams.getPlatform()[i])) {
+                shareBuilder.setSinaAppKey(ShareConstants.SINA_APPKEY)
+                        .setSinaRedirectUrl(ShareConstants.DEFAULT_REDIRECT_URL)
+                        .setSinaScope(ShareConstants.DEFAULT_SCOPE);
+            } else {
+                shareBuilder.setWxAppId(ShareConstants.WECHAT_APPID);
+            }
+        }
+
+        return shareBuilder.build();
+
+
+    }
+    /**
+     * 测试数据
+     * @return
+     */
+    public void shareText(View view) {
+        ShareData shareInfo = getShareTextData();
+        if (shareInfo != null && shareInfo.getPlatform().length > 0) {
+            mShareHelper = new ShareHelper(shareInfo, (FragmentActivity)cordova.getActivity(),getShareBuilder(shareInfo), back);
+            ShareUtil.getShareUtil().share(mShareHelper,shareInfo,cordova.getActivity());
+        } else {
+            Toast.makeText(cordova.getActivity(), "分享异常", Toast.LENGTH_SHORT).show();
+        }
+    }
+    /**
+     * 测试数据
+     * @return
+     */
+    public void shareVideo(View view) {
+        ShareData shareInfo = getShareVideoData();
+        if (shareInfo != null && shareInfo.getPlatform().length > 0) {
+            mShareHelper = new ShareHelper(shareInfo, (FragmentActivity)cordova.getActivity(),getShareBuilder(shareInfo), back);
+            ShareUtil.getShareUtil().share(mShareHelper,shareInfo,cordova.getActivity());
+        } else {
+            Toast.makeText(cordova.getActivity(), "分享异常", Toast.LENGTH_SHORT).show();
+        }
+    }
+    /**
+     * 测试数据
+     * @return
+     */
+    private ShareData getShareVideoData() {
+        ShareData shareInfoParams = new ShareData();
+        shareInfoParams.setTitle("这个名字不错");
+        shareInfoParams.setShareDesc("这个内容很有意思");
+        shareInfoParams.setShareType(ShareConstants.SHARE_VIDEO);
+        shareInfoParams.setShareImageUrl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536208706724&di=db42f6e28c6738485b4ab11352a7244f&imgtype=0&src=http%3A%2F%2Fimg4.duitang.com%2Fuploads%2Fitem%2F201305%2F26%2F20130526140022_5fMJe.jpeg");
+        shareInfoParams.setShareUrl(video);
+        String[] platform = new String[]{ ShareConstants.WEI_CHAT,ShareConstants.QZONE, ShareConstants.WEIBO, ShareConstants.QQ, ShareConstants.WE_CHAT_MOMENTS};
         shareInfoParams.setPlatform(platform);
         return shareInfoParams;
 
     }
 
+    /**
+     * 测试数据
+     * @return
+     */
+    private ShareData getShareTextData() {
+        ShareData shareInfoParams = new ShareData();
+        shareInfoParams.setTitle("这个名字不错");
+        shareInfoParams.setShareDesc("这个内容很有意思");
+        shareInfoParams.setShareType(ShareConstants.SHARE_TEXT);
+        shareInfoParams.setShareImageUrl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536208706724&di=db42f6e28c6738485b4ab11352a7244f&imgtype=0&src=http%3A%2F%2Fimg4.duitang.com%2Fuploads%2Fitem%2F201305%2F26%2F20130526140022_5fMJe.jpeg");
+        shareInfoParams.setShareUrl("http://item.gome.com.cn/9133860280-1122860067.html");
+        String[] platform = new String[]{ShareConstants.WEIBO,ShareConstants.QZONE,  ShareConstants.WEI_CHAT, ShareConstants.QQ, ShareConstants.WE_CHAT_MOMENTS};
+        shareInfoParams.setPlatform(platform);
+        return shareInfoParams;
 
-    public void qqshare(ShareData shareInfo) {
-        BaseShareParam param = null;
-        param = new ShareParamWebPage(shareInfo.getTitle(), shareInfo.getShareDesc(), shareInfo.getShareUrl());
-//        ShareParamImage paramImage = (ShareParamImage) param;
-///        paramImage.setImage(new ShareImage(shareInfo.shareImageUrl));
-        mPlatform.doShare(param);
     }
 
+    /**
+     * 测试数据
+     *
+     * @return
+     */
+    private ShareData getShareImageData() {
+        ShareData shareInfoParams = new ShareData();
+        shareInfoParams.setTitle("这个名字不错");
+        shareInfoParams.setShareDesc("这个内容很有意思");
+        shareInfoParams.setShareType(ShareConstants.SHARE_IMAGE);
+        shareInfoParams.setShareImageUrl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536237347811&di=d0d45fe3548e21f0818911547c1c5237&imgtype=0&src=http%3A%2F%2Fwww.xz7.com%2Fup%2F2017-12%2F2017122310640.jpg");
+        shareInfoParams.setShareUrl("http://item.gome.com.cn/9133860280-1122860067.html");
+        String[] platform = new String[]{ShareConstants.QZONE, ShareConstants.WEIBO, ShareConstants.WEI_CHAT, ShareConstants.QQ, ShareConstants.WE_CHAT_MOMENTS};
+        shareInfoParams.setPlatform(platform);
+        return shareInfoParams;
 
-    private ShareImage generateImage() {
-        //ShareImage image = new ShareImage(file);
-        BitmapFactory.Options options2 = new BitmapFactory.Options();
-        options2.inPreferredConfig = Bitmap.Config.RGB_565;
-        Bitmap bitmap = BitmapFactory.decodeResource(cordova.getActivity().getResources(), R.drawable.aaaaa, options2);
-        ShareImage image = new ShareImage(bitmap);
-        //ShareImage image = new ShareImage(resId);
-//        ShareImage image = new ShareImage("http://gfs.gomein.net.cn/T13VWTBXCv1RCvBVdK_800.jpg");
-//        ShareImage image = new ShareImage(R.drawable.ic_launcher);
-        return image;
     }
 
     public ShareResultCallBack back = new ShareResultCallBack() {
@@ -122,5 +177,8 @@ public class SharePlugin extends CordovaPlugin {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
+        if (mShareHelper != null) {
+            mShareHelper.onActivityResult(requestCode, resultCode, intent);
+        }
     }
 }

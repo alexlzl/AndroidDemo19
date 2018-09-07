@@ -18,11 +18,11 @@ import com.liuyang.share.SocializeMedia;
 import com.liuyang.share.exception.ShareException;
 
 /**
- * Created by liuyang-ds on 2016/12/28.
+ * 测试分享页面
  */
 public class ShareActivity extends FragmentActivity implements View.OnClickListener {
     private Button btnShare;
-    private ShareHelper mShareHelper ;
+    private ShareHelper mShareHelper;
     private String video = "https://v1-tt.ixigua.com/2ce0de4ab005d865410ee0f140e0e8e9/5b90a9d3/video/m/220e5969680e3ef4e1aaa376786975d9384115b1fd50000380c95d4543f/";
 
     @Override
@@ -40,9 +40,9 @@ public class ShareActivity extends FragmentActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.btnShare:
                 ShareData shareInfo = getShareImageData();
-                mShareHelper = new ShareHelper(shareInfo, this,getShareBuilder(shareInfo), back);
+                mShareHelper = new ShareHelper(shareInfo, this, getShareBuilder(shareInfo), back);
                 if (shareInfo != null && shareInfo.getPlatform().length > 0) {
-                    ShareUtil.getShareUtil().share(mShareHelper,shareInfo,this);
+                    ShareUtil.getShareUtil().share(mShareHelper, shareInfo, this);
                 } else {
                     Toast.makeText(this, "分享异常", Toast.LENGTH_SHORT).show();
                 }
@@ -51,6 +51,7 @@ public class ShareActivity extends FragmentActivity implements View.OnClickListe
                 break;
         }
     }
+
     private ShareBuilder getShareBuilder(ShareData shareInfoParams) {
         int size = shareInfoParams.getPlatform().length;
 
@@ -74,26 +75,42 @@ public class ShareActivity extends FragmentActivity implements View.OnClickListe
 
 
     }
+
+    /**
+     * 测试数据
+     *
+     * @return
+     */
     public void shareText(View view) {
         ShareData shareInfo = getShareTextData();
         if (shareInfo != null && shareInfo.getPlatform().length > 0) {
-            mShareHelper = new ShareHelper(shareInfo, this,getShareBuilder(shareInfo), back);
-            ShareUtil.getShareUtil().share(mShareHelper,shareInfo,this);
+            mShareHelper = new ShareHelper(shareInfo, this, getShareBuilder(shareInfo), back);
+            ShareUtil.getShareUtil().share(mShareHelper, shareInfo, this);
         } else {
             Toast.makeText(this, "分享异常", Toast.LENGTH_SHORT).show();
         }
     }
 
+    /**
+     * 测试数据
+     *
+     * @return
+     */
     public void shareVideo(View view) {
         ShareData shareInfo = getShareVideoData();
         if (shareInfo != null && shareInfo.getPlatform().length > 0) {
-            mShareHelper = new ShareHelper(shareInfo, this,getShareBuilder(shareInfo), back);
-            ShareUtil.getShareUtil().share(mShareHelper,shareInfo,this);
+            mShareHelper = new ShareHelper(shareInfo, this, getShareBuilder(shareInfo), back);
+            ShareUtil.getShareUtil().share(mShareHelper, shareInfo, this);
         } else {
             Toast.makeText(this, "分享异常", Toast.LENGTH_SHORT).show();
         }
     }
 
+    /**
+     * 测试数据
+     *
+     * @return
+     */
     private ShareData getShareVideoData() {
         ShareData shareInfoParams = new ShareData();
         shareInfoParams.setTitle("这个名字不错");
@@ -101,12 +118,17 @@ public class ShareActivity extends FragmentActivity implements View.OnClickListe
         shareInfoParams.setShareType(ShareConstants.SHARE_VIDEO);
         shareInfoParams.setShareImageUrl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536208706724&di=db42f6e28c6738485b4ab11352a7244f&imgtype=0&src=http%3A%2F%2Fimg4.duitang.com%2Fuploads%2Fitem%2F201305%2F26%2F20130526140022_5fMJe.jpeg");
         shareInfoParams.setShareUrl(video);
-        String[] platform = new String[]{ ShareConstants.WEI_CHAT,ShareConstants.QZONE, ShareConstants.WEIBO, ShareConstants.QQ, ShareConstants.WE_CHAT_MOMENTS};
+        String[] platform = new String[]{ShareConstants.WEI_CHAT, ShareConstants.QZONE, ShareConstants.WEIBO, ShareConstants.QQ, ShareConstants.WE_CHAT_MOMENTS};
         shareInfoParams.setPlatform(platform);
         return shareInfoParams;
 
     }
 
+    /**
+     * 测试数据
+     *
+     * @return
+     */
     private ShareData getShareTextData() {
         ShareData shareInfoParams = new ShareData();
         shareInfoParams.setTitle("这个名字不错");
@@ -114,7 +136,7 @@ public class ShareActivity extends FragmentActivity implements View.OnClickListe
         shareInfoParams.setShareType(ShareConstants.SHARE_TEXT);
         shareInfoParams.setShareImageUrl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536208706724&di=db42f6e28c6738485b4ab11352a7244f&imgtype=0&src=http%3A%2F%2Fimg4.duitang.com%2Fuploads%2Fitem%2F201305%2F26%2F20130526140022_5fMJe.jpeg");
         shareInfoParams.setShareUrl("http://item.gome.com.cn/9133860280-1122860067.html");
-        String[] platform = new String[]{ShareConstants.WEIBO,ShareConstants.QZONE,  ShareConstants.WEI_CHAT, ShareConstants.QQ, ShareConstants.WE_CHAT_MOMENTS};
+        String[] platform = new String[]{ShareConstants.WEIBO, ShareConstants.QZONE, ShareConstants.WEI_CHAT, ShareConstants.QQ, ShareConstants.WE_CHAT_MOMENTS};
         shareInfoParams.setPlatform(platform);
         return shareInfoParams;
 
@@ -143,25 +165,25 @@ public class ShareActivity extends FragmentActivity implements View.OnClickListe
 
         @Override
         public void onSuccess(SocializeMedia socializeMedia) {
-            Log.e("TAGG","微信正常回调============"+"onSuccess");
+            Log.e("TAGG", "正常回调============" + "onSuccess");
             Toast.makeText(ShareActivity.this, socializeMedia.name() + "成功了", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onError(SocializeMedia socializeMedia, ShareException exception) {
-            Log.e("TAGG","微信正常回调============"+"onError");
+            Log.e("TAGG", "正常回调============" + "onError");
             Toast.makeText(ShareActivity.this, socializeMedia.name() + "失败了", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onCancel(SocializeMedia socializeMedia) {
-            Log.e("TAGG","微信正常回调============"+"onCancel");
+            Log.e("TAGG", "正常回调============" + "onCancel");
             Toast.makeText(ShareActivity.this, socializeMedia.name() + "取消了", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onDealing(SocializeMedia socializeMedia) {
-            Log.e("TAGG","微信正常回调============"+"onDealing");
+            Log.e("TAGG", "正常回调============" + "onDealing");
             Toast.makeText(ShareActivity.this, socializeMedia.name() + "处理中了", Toast.LENGTH_SHORT).show();
         }
     };
