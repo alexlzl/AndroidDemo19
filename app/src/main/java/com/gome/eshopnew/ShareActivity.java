@@ -53,7 +53,8 @@ public class ShareActivity extends FragmentActivity implements View.OnClickListe
     }
 
     private ShareBuilder getShareBuilder(){
-        ShareBuilder shareBuilder = new ShareBuilder.Builder(ShareActivity.this)
+
+        return  new ShareBuilder.Builder(ShareActivity.this)
                 .setDefaultShareImage(R.drawable.ic_launcher)
                 .setQqAppId(ShareConstants.QQ_APPID)
                 .setQqScope(ShareConstants.QQ_SCOPE)
@@ -62,7 +63,6 @@ public class ShareActivity extends FragmentActivity implements View.OnClickListe
                 .setSinaRedirectUrl(ShareConstants.DEFAULT_REDIRECT_URL)
                 .setSinaScope(ShareConstants.DEFAULT_SCOPE)
                 .build();
-        return shareBuilder;
     }
 
 //    private ShareBuilder getShareBuilder(ShareData shareInfoParams) {
@@ -165,7 +165,10 @@ public class ShareActivity extends FragmentActivity implements View.OnClickListe
         shareInfoParams.setShareType(ShareConstants.SHARE_IMAGE);
         shareInfoParams.setShareImageUrl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536237347811&di=d0d45fe3548e21f0818911547c1c5237&imgtype=0&src=http%3A%2F%2Fwww.xz7.com%2Fup%2F2017-12%2F2017122310640.jpg");
         shareInfoParams.setShareUrl("http://item.gome.com.cn/9133860280-1122860067.html");
-        String[] platform = new String[]{ShareConstants.QZONE,  ShareConstants.WEI_CHAT, ShareConstants.QQ, ShareConstants.WE_CHAT_MOMENTS};
+//        String[] platform = new String[]{ShareConstants.QZONE,  ShareConstants.WEI_CHAT, ShareConstants.QQ, ShareConstants.WE_CHAT_MOMENTS};
+//        String[] platform = new String[]{ShareConstants.QZONE};
+        String[] platform = new String[]{ShareConstants.QZONE,  ShareConstants.WEI_CHAT};
+//        String[] platform = new String[]{ShareConstants.QZONE,  ShareConstants.WEI_CHAT, ShareConstants.QQ, ShareConstants.WE_CHAT_MOMENTS};
         shareInfoParams.setPlatform(platform);
         return shareInfoParams;
 

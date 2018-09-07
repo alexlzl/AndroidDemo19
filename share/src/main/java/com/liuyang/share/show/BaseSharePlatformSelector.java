@@ -61,7 +61,7 @@ public abstract class BaseSharePlatformSelector {
                 return view;
             }
         };
-        grid.setNumColumns(-1);
+        grid.setNumColumns(mShareInfoParams.getPlatform().length);
         grid.setStretchMode(GridView.STRETCH_COLUMN_WIDTH);
         grid.setColumnWidth(context.getResources().getDimensionPixelSize(R.dimen.share_socialize_shareboard_size));
         grid.setLayoutParams(new ViewGroup.LayoutParams(-1, -2));

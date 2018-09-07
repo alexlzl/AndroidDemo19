@@ -50,7 +50,7 @@ public class SharePlugin extends CordovaPlugin {
         return false;
     }
     private ShareBuilder getShareBuilder(){
-        ShareBuilder shareBuilder = new ShareBuilder.Builder(cordova.getActivity())
+        return  new ShareBuilder.Builder(cordova.getActivity())
                 .setDefaultShareImage(R.drawable.ic_launcher)
                 .setQqAppId(ShareConstants.QQ_APPID)
                 .setQqScope(ShareConstants.QQ_SCOPE)
@@ -59,7 +59,6 @@ public class SharePlugin extends CordovaPlugin {
                 .setSinaRedirectUrl(ShareConstants.DEFAULT_REDIRECT_URL)
                 .setSinaScope(ShareConstants.DEFAULT_SCOPE)
                 .build();
-        return shareBuilder;
     }
 //    private ShareBuilder getShareBuilder(ShareData shareInfoParams) {
 //        int size = shareInfoParams.getPlatform().length;

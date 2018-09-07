@@ -47,7 +47,7 @@ public class DialogSharePlatformSelector extends BaseSharePlatformSelector {
     public Dialog createDialog() {
         GridView grid = createShareGridView(getContext(), mItemClickListener);
         LinearLayout linearLayout = (LinearLayout) View.inflate(getContext(), R.layout.share_socialize_shareboard_main, null);
-        linearLayout.addView(grid, 0);
+        linearLayout.addView(grid, 1);
         Dialog dialog = new Dialog(getContext(), R.style.Share_Dialog);
         dialog.setContentView(linearLayout);
         Window window = dialog.getWindow();
