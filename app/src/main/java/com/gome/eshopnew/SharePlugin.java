@@ -38,8 +38,8 @@ public class SharePlugin extends CordovaPlugin {
 
         if (ACTION_NAME.equals(action)) {
             ShareData shareInfo = getShareImageData();
-            mShareHelper = new ShareHelper(shareInfo, (FragmentActivity)cordova.getActivity(),getShareBuilder(), back);
             if (shareInfo != null && shareInfo.getPlatform().length > 0) {
+                mShareHelper = new ShareHelper(shareInfo, (FragmentActivity)cordova.getActivity(),getShareBuilder(), back);
                 ShareUtil.getShareUtil().share(mShareHelper,shareInfo,cordova.getActivity());
             } else {
                 Toast.makeText(cordova.getActivity(), "分享异常", Toast.LENGTH_SHORT).show();

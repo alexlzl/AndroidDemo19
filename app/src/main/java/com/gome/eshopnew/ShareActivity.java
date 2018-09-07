@@ -40,8 +40,8 @@ public class ShareActivity extends FragmentActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.btnShare:
                 ShareData shareInfo = getShareImageData();
-                mShareHelper = new ShareHelper(shareInfo, this, getShareBuilder(), back);
                 if (shareInfo != null && shareInfo.getPlatform().length > 0) {
+                    mShareHelper = new ShareHelper(shareInfo, this, getShareBuilder(), back);
                     ShareUtil.getShareUtil().share(mShareHelper, shareInfo, this);
                 } else {
                     Toast.makeText(this, "分享异常", Toast.LENGTH_SHORT).show();
